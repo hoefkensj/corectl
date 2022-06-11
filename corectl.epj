@@ -1,0 +1,186 @@
+{
+  "header": {
+    "comment": "eric project file for project corectl",
+    "copyright": "Copyright (C) 2022 Hoefkens Jeroen, Hoefkens.j@gmail.com",
+    "saved": "2022-06-12, 00:39:02"
+  },
+  "project": {
+    "AUTHOR": "Hoefkens Jeroen",
+    "CHECKERSPARMS": {},
+    "DESCRIPTION": "",
+    "DOCSTRING": "ericdoc",
+    "DOCUMENTATIONPARMS": {},
+    "EMAIL": "Hoefkens.j@gmail.com",
+    "EOL": 0,
+    "FILETYPES": {
+      "*.e4p": "OTHERS",
+      "*.epj": "OTHERS",
+      "*.idl": "INTERFACES",
+      "*.js": "SOURCES",
+      "*.md": "OTHERS",
+      "*.proto": "PROTOCOLS",
+      "*.py": "SOURCES",
+      "*.py3": "SOURCES",
+      "*.pyw": "SOURCES",
+      "*.pyw3": "SOURCES",
+      "*.qm": "TRANSLATIONS",
+      "*.rb": "SOURCES",
+      "*.rst": "SOURCES",
+      "*.ts": "TRANSLATIONS",
+      "*.txt": "OTHERS",
+      "*.ui": "FORMS",
+      "GNUmakefile": "OTHERS",
+      "Makefile": "OTHERS",
+      "README": "OTHERS",
+      "README.*": "OTHERS",
+      "makefile": "OTHERS"
+    },
+    "FORMS": [
+      "Projects_ACTIVE/cpuface/cpuface.ui"
+    ],
+    "HASH": "365d3a401a8c7c24b6afef69cf6ea25cde5b4080",
+    "IDLPARAMS": {
+      "DefinedNames": [],
+      "IncludeDirs": [],
+      "UndefinedNames": []
+    },
+    "INTERFACES": [],
+    "LEXERASSOCS": {},
+    "MAINSCRIPT": "__main__.py",
+    "MAKEPARAMS": {
+      "MakeEnabled": false,
+      "MakeExecutable": "",
+      "MakeFile": "",
+      "MakeParameters": "",
+      "MakeTarget": "",
+      "MakeTestOnly": true
+    },
+    "MIXEDLANGUAGE": true,
+    "OTHERS": [
+      "Projects_ACTIVE/cpuface/throttlevtl.epj",
+      "Projects_ACTIVE/cpoiler/cpoiler.epj",
+      "Projects_ACTIVE/cpuface/README.md",
+      "Projects_ACTIVE/cpuface/LICENSE.txt",
+      "Projects_ACTIVE/cpuface/makefile",
+      "Projects_ACTIVE/cpuface/Makefile",
+      ".gitignore"
+    ],
+    "OTHERTOOLSPARMS": {},
+    "PACKAGERSPARMS": {},
+    "PROGLANGUAGE": "Python3",
+    "PROJECTTYPE": "PyQt6",
+    "PROJECTTYPESPECIFICDATA": {},
+    "PROTOCOLS": [],
+    "RCCPARAMS": {
+      "CompressLevel": 0,
+      "CompressionDisable": false,
+      "CompressionThreshold": 70,
+      "PathPrefix": ""
+    },
+    "RESOURCES": [],
+    "SOURCES": [
+      "__main__.py",
+      "lib/__init__.py",
+      "static/__init__.py",
+      "mod/__init__.py",
+      "mod/perf/__init__.py",
+      "mod/msr/__init__.py",
+      "mod/msr/__main__.py",
+      "mod/msr/msr.py",
+      "mod/metering/__init__.py",
+      "mod/metering/cpu.py",
+      "mod/polkit/__init__.py",
+      "mod/polkit/polkit.py",
+      "cfg/__init__.py",
+      "Projects_ACTIVE/cpuface/cpu_get.py",
+      "Projects_ACTIVE/cpuface/cpu_set.py",
+      "Projects_ACTIVE/cpuface/cpuface.py",
+      "Projects_ACTIVE/cpuface/main.py",
+      "Projects_ACTIVE/cpuface/profiles.py",
+      "Projects_ACTIVE/cpuface/__init__.py",
+      "Projects_ACTIVE/cpuface/interface/cli/__init__.py",
+      "Projects_ACTIVE/cpuface/interface/qt5/__init__.py",
+      "Projects_ACTIVE/cpuface/interface/api/__init__.py",
+      "Projects_ACTIVE/cpuface/lib/__init__.py",
+      "Projects_ACTIVE/cpuface/fnx/__init__.py",
+      "Projects_ACTIVE/cpuface/static/__init__.py",
+      "Projects_ACTIVE/cpoiler/__main__.py",
+      "Projects_ACTIVE/cpoiler/cpoiler.py",
+      "Projects_ACTIVE/cpoiler/gieter.py",
+      "Projects_ACTIVE/cpoiler/__init__.py",
+      "Projects_ACTIVE/cpoiler/fnx/__init__.py",
+      "Projects_ACTIVE/cpoiler/fnx/main.py",
+      "Projects_ACTIVE/cpoiler/fnx/logic.py",
+      "Projects_ACTIVE/cpoiler/fnx/msr.py",
+      "Projects_ACTIVE/cpoiler/fnx/proc.py",
+      "Projects_ACTIVE/cpoiler/fnx/cputemp.py",
+      "Projects_ACTIVE/cpoiler/fnx/stdfn.py",
+      "Projects_ACTIVE/cpoiler/static/__init__.py",
+      "Projects_ACTIVE/cpoiler/static/locale/__init__.py",
+      "Projects_ACTIVE/cpoiler/itrface/__init__.py",
+      "func/__init__.py",
+      "iface/__init__.py",
+      "iface/api/__init__.py",
+      "iface/api/script.py",
+      "iface/cli/__init__.py",
+      "iface/cli/cli.py",
+      "iface/cli/clo.py",
+      "iface/qt/__init__.py",
+      "__init__.py",
+      "corectl.py"
+    ],
+    "SPELLEXCLUDES": "",
+    "SPELLLANGUAGE": "",
+    "SPELLWORDS": "",
+    "TRANSLATIONEXCEPTIONS": [],
+    "TRANSLATIONPATTERN": "",
+    "TRANSLATIONS": [],
+    "TRANSLATIONSBINPATH": "",
+    "UICPARAMS": {
+      "Package": "",
+      "PackagesRoot": "",
+      "RcSuffix": ""
+    },
+    "VCS": "Git",
+    "VCSOPTIONS": {
+      "add": [
+        ""
+      ],
+      "checkout": [
+        ""
+      ],
+      "commit": [
+        ""
+      ],
+      "diff": [
+        ""
+      ],
+      "export": [
+        ""
+      ],
+      "global": [
+        ""
+      ],
+      "history": [
+        ""
+      ],
+      "log": [
+        ""
+      ],
+      "remove": [
+        ""
+      ],
+      "status": [
+        ""
+      ],
+      "tag": [
+        ""
+      ],
+      "update": [
+        ""
+      ]
+    },
+    "VCSOTHERDATA": {},
+    "VERSION": "0.1"
+  }
+}

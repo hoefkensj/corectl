@@ -1,0 +1,17 @@
+[[package]]
+name = "sourcery"
+version = "1.2.7"
+description = "Tools for creating high fidelity source catalogues from radio interferometric datasets"
+category = "main"
+optional = false
+python-versions = "*"
+
+[metadata]
+lock-version = "1.1"
+python-versions = "^3.10"
+content-hash = "04b8c1365e3e92ee83ff741850c8d9ffa1f4777a1aaa5a241b6675ec1bb51330"
+
+[metadata.files]
+sourcery = [
+    {file = "sourcery-1.2.7.tar.gz", hash = "sha256:ef414f71099c52f5df25955f01660a3879867475a62da2c7b99a6c68cd69ad75"},
+]

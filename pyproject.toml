@@ -7,6 +7,9 @@ authors = ["Hoefkens Jeroen <hoefkens.j@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 sourcery = "^1.2.7"
+py-cpuinfo = "^8.0.0"
+click = "^8.1.3"
+psutil = "^5.9.1"
 
 [tool.poetry.dev-dependencies]
 

@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-import click as C
-import func.main
+
 import func.proc
 import func.msr
 import func.stdfn
 import static.locale
-import func.stdfn
+import func.msr
 import itrface.cli.clo
 
 INFO=static.locale.loadloc('en')['cli']['main']['info']
@@ -31,10 +30,11 @@ def entry_point(ctx,y,script,stdout,table):
 
 @C.command()
 @C.pass_context
-def cli_chk(ctx):
+@C.argument('flag')
+def read(ctx,flag):
 	"""Check MSR: 0x1FC[0]"""
-	check=func.proc.proc_chk()
-	data=[
+	func.msr.read_flag(flag='BD_PROCHOT')
+	data=[rq
 				['  MSR #0x1FC',check,]
 	]
 	# std_out=func.stdfn.std_row(check,'MSR #0x1FC' ,2)
@@ -44,39 +44,17 @@ def cli_chk(ctx):
 
 @C.command()
 @C.pass_context
-def cli_set(ctx):
+@C.argument('flag')
+def set(ctx,flag):
 	"""Set BD_PROCHOT Flag (set to 1)"""
-	out=itrface.cli.clo.stdout_table(ctx)
-	check	= func.proc.proc_chk()
-  orr,result	= func.proc.proc_set(check)
-	std_out=[0,0,0]
-	std_out[0]= func.stdfn.std_row(check, 'MSR #0x1FC', 2)
-	std_out[1]= func.stdfn.std_row(orr, ' OR #0x1FC', 2)
-	std_out[2]= func.stdfn.std_row(result, 'NEW #0x1FC', 2)
-	
-	C.echo(std_out)
-func.msr.wrmsr_0x1FC(result['HEXX'])
+
 	return
 	
 @C.command()
 @C.pass_context
-def cli_clr(ctx):
+def clear(ctx):
 	"""Clear BD_PROCHOT Flag (set to 0)"""
-	check	= func.proc.proc_chk()
-  andd,result	= functions.proc.proc_clr(check)
-	std_out=std_box=[0,0,0]
-
-	# C.echo(table)
-  std_out[0],std_box[0] = functions.stdfn.std_row(check, 'MSR #0x1FC', 2)
-  std_out[1],std_box[1] = functions.stdfn.std_row(andd, 'AND #0x1FC', 2)
 	
-  std_out[2],std_box[2] = functions.stdfn.std_row(result, 'NEW #0x1FC', 2)
-	
-	# table=func.stdfn.dec_boxdraw().format(rows=f'\n{std_box[0]}\n{std_box[1]}\n\n{std_box[2]}\n')
-	
-	# C.echo(table)
-	C.echo(std_out)
-	# func.msr.wrmsr_0x1FC(result['HEXX'])
 	return
 
 @C.command()
@@ -86,8 +64,8 @@ def cli_modMSR(ctx):
 	func.proc.proc_msr()
 	
 	
-entry_point.add_command(cli_chk, name="check")
-entry_point.add_command(cli_set, name="set")
-entry_point.add_command(cli_clr, name="reset")
+entry_point.add_command(read, name="read")
+entry_point.add_command(set, name="set")
+entry_point.add_command(clear, name="clear")
 entry_point.add_command(cli_modMSR, name="msr")
 

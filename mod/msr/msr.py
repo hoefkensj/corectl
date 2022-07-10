@@ -49,7 +49,7 @@ def write_flag(addr,bit, val) ->str:
 	str_regnw				=		str().join(lst_regnw)
 	x_value					=		f'{S2BIN(str_regnw):x}'
 	result					=		write_0x(addr, x_value)
-	return result or
+	return result
 
 def write_BDPROCHOT(val) -> str:
 		result				= write_flag(0x1FC, 0, val)

@@ -1,0 +1,23 @@
+{
+  "header": {
+    "comment": "eric tasks file for project cpuconf",
+    "warning": "This file was generated automatically, do not edit.",
+    "saved": "2022-07-10, 19:38:35"
+  },
+  "ProjectScanFilter": "",
+  "Tasks": [
+    {
+      "summary": "WARNING: Any manual changes made to this file will be lost when pyuic5 is",
+      "description": "",
+      "priority": 1,
+      "lineno": 7,
+      "completed": false,
+      "created": 1657474712.5114012,
+      "type": 2,
+      "uid": "{9e333082-1734-4b35-ac36-83ba1e58ed14}",
+      "parent_uid": "",
+      "expanded": false,
+      "filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/Main.py"
+    }
+  ]
+}

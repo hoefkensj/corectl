@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project cpuconf",
     "copyright": "Copyright (C) 2022 Hoefkens Jeroen, Hoefkens.j@gmail.com",
-    "saved": "2022-07-03, 21:25:49"
+    "saved": "2022-07-15, 10:08:05"
   },
   "project": {
     "AUTHOR": "Hoefkens Jeroen",
@@ -37,6 +37,7 @@
     },
     "FORMS": [
       "iface/qt5/Main.ui",
+      "iface/qt5/cpuface.ui",
       "iface/qt6/Main.ui"
     ],
     "HASH": "365d3a401a8c7c24b6afef69cf6ea25cde5b4080",
@@ -58,7 +59,7 @@
     },
     "MIXEDLANGUAGE": true,
     "OTHERS": [
-      "makefile"
+      "cpuconf.epj"
     ],
     "OTHERTOOLSPARMS": {},
     "PACKAGERSPARMS": {},
@@ -87,16 +88,16 @@
       "iface/cli/cli.py",
       "iface/cli/msr/__init__.py",
       "iface/cli/msr/msr.py",
+      "iface/qt5/Main.py",
       "iface/qt5/__init__.py",
+      "iface/qt5/cpuface.py",
+      "iface/qt5/main.py",
       "iface/qt6/Main.py",
       "iface/qt6/__init__.py",
       "iface/qt6/main.py",
-      "iface/qt6/ui_Main.py",
       "mod/__init__.py",
       "mod/cpuid/__init__.py",
       "mod/cpuid/cpuid.py",
-      "mod/gov/__init__.py",
-      "mod/gov/perf.py",
       "mod/metering/__init__.py",
       "mod/metering/cpu.py",
       "mod/msr/__init__.py",
@@ -105,6 +106,10 @@
       "mod/msr/msr.py",
       "mod/polkit/__init__.py",
       "mod/polkit/polkit.py",
+      "mod/prof/__init__.py",
+      "mod/prof/perf.py",
+      "mod/su/__init__.py",
+      "mod/su/su.py",
       "static/__init__.py"
     ],
     "SPELLEXCLUDES": "",

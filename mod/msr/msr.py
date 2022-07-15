@@ -10,11 +10,20 @@ PROC_run	=		functools.partial(  subprocess.run							,
                                   universal_newlines	=	True	,	)
 S2BIN			=		functools.partial(  int	,	base=2	, )
 
+
+
 def load_module() ->int :
 	proc=subprocess.run(  ['modprobe' ,'-vvv', 'intel_rapl_msr']					,
                           capture_output			=	True	,
                         )
 	return	int(proc.returncode)
+
+def check_module() -> bool :
+	lsmod = subprocess.check_output("lsmod | awk '{print $1}'",
+																	shell= True								)
+	return 'intel_rapl_msr' in  lsmod.splitlines()
+
+
 
 def read_0x(addr) -> str:
 	command=shlex.split(f'rdmsr -X0 {addr}')
@@ -27,11 +36,12 @@ def read_0b(addr) -> str:
 	return str().join(bits)
 
 def read_flag(addr, bit) -> bool:
+
 	command = shlex.split(f'rdmsr --bitfield {bit}:{bit} {addr}')
 	return S2BIN(PROC_run(command).stdout.strip())
 
 def read_BDPROCHOT() -> bool:
-	BD_PROCHOT = read_flag(0x1FC, 0)
+	BD_PROCHOT = read_flag('0x1FC', 0)
 	return bool(BD_PROCHOT)
 
 def write_0x(reg,val)	-> str:

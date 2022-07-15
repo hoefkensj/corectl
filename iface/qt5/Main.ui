@@ -231,7 +231,7 @@
                    <number>0</number>
                   </property>
                   <item>
-                   <widget class="QComboBox" name="comboBox">
+                   <widget class="QComboBox" name="cmbNrg">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                       <horstretch>0</horstretch>
@@ -324,6 +324,11 @@
              <height>20</height>
             </size>
            </property>
+           <property name="font">
+            <font>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
            <property name="frameShape">
             <enum>QFrame::NoFrame</enum>
            </property>
@@ -345,10 +350,16 @@
            <property name="wordWrap">
             <bool>false</bool>
            </property>
+           <property name="rowCount">
+            <number>1</number>
+           </property>
            <property name="columnCount">
             <number>5</number>
            </property>
            <attribute name="horizontalHeaderVisible">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="horizontalHeaderCascadingSectionResizes">
             <bool>false</bool>
            </attribute>
            <attribute name="horizontalHeaderMinimumSectionSize">
@@ -357,9 +368,16 @@
            <attribute name="horizontalHeaderDefaultSectionSize">
             <number>10</number>
            </attribute>
+           <attribute name="horizontalHeaderHighlightSections">
+            <bool>false</bool>
+           </attribute>
            <attribute name="verticalHeaderVisible">
             <bool>false</bool>
            </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>22</number>
+           </attribute>
+           <row/>
            <column/>
            <column/>
            <column/>
@@ -378,14 +396,14 @@
             </attribute>
             <layout class="QGridLayout" name="gridLayout">
              <item row="0" column="0">
-              <widget class="QCheckBox" name="checkBox">
+              <widget class="QCheckBox" name="ckbBDPROCHOT">
                <property name="text">
                 <string>BD_PROCHOT</string>
                </property>
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QCheckBox" name="checkBox_2">
+              <widget class="QCheckBox" name="ckbTurbo">
                <property name="text">
                 <string>TurboBoost</string>
                </property>
@@ -453,7 +471,7 @@
      <x>0</x>
      <y>0</y>
      <width>649</width>
-     <height>23</height>
+     <height>32</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuMain">

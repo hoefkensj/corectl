@@ -1,0 +1,121 @@
+{
+  "header": {
+    "comment": "eric session file for project cpuconf",
+    "warning": "This file was generated automatically, do not edit.",
+    "saved": "2022-07-15, 10:10:33"
+  },
+  "MultiProject": "",
+  "Project": "",
+  "ViewManagerSplits": {
+    "Count": 1,
+    "Orientation": 2
+  },
+  "Editors": [
+    {
+      "Filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/corectl.py",
+      "Cursor": [
+        0,
+        0
+      ],
+      "Folds": [],
+      "Zoom": 0,
+      "Clone": false,
+      "Splitindex": 0,
+      "Editorindex": 0
+    },
+    {
+      "Filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/Main.py",
+      "Cursor": [
+        0,
+        0
+      ],
+      "Folds": [],
+      "Zoom": 0,
+      "Clone": false,
+      "Splitindex": 0,
+      "Editorindex": 1
+    },
+    {
+      "Filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/main.py",
+      "Cursor": [
+        0,
+        0
+      ],
+      "Folds": [],
+      "Zoom": 0,
+      "Clone": false,
+      "Splitindex": 0,
+      "Editorindex": 2
+    },
+    {
+      "Filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/mod/metering/cpu.py",
+      "Cursor": [
+        0,
+        0
+      ],
+      "Folds": [],
+      "Zoom": 0,
+      "Clone": false,
+      "Splitindex": 0,
+      "Editorindex": 3
+    },
+    {
+      "Filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/mod/msr/msr.py",
+      "Cursor": [
+        11,
+        0
+      ],
+      "Folds": [],
+      "Zoom": 0,
+      "Clone": false,
+      "Splitindex": 0,
+      "Editorindex": 4
+    }
+  ],
+  "ActiveWindow": {
+    "Filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/mod/msr/msr.py",
+    "Cursor": [
+      11,
+      0
+    ]
+  },
+  "Breakpoints": [],
+  "Watchpoints": [],
+  "DebugInfo": {
+    "VirtualEnv": "",
+    "ScriptName": "",
+    "CommandLine": "",
+    "WorkingDirectory": "",
+    "Environment": "",
+    "ReportExceptions": true,
+    "Exceptions": [],
+    "IgnoredExceptions": [],
+    "AutoClearShell": true,
+    "TracePython": false,
+    "AutoContinue": true,
+    "EnableMultiprocess": true,
+    "MultiprocessNoDebug": "",
+    "GlobalConfigOverride": {
+      "enable": false,
+      "redirect": true
+    }
+  },
+  "Bookmarks": [],
+  "ProjectBrowserStates": [
+    {
+      "Name": "sources",
+      "ExpandedItems": [
+        "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/cfg",
+        "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface",
+        "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5",
+        "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/main.py",
+        "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/main.py@@7",
+        "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/mod",
+        "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/mod/cpuid",
+        "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/mod/cpuid/cpuid.py",
+        "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/mod/metering",
+        "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/mod/msr"
+      ]
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project cpuconf",
     "copyright": "Copyright (C) 2022 Hoefkens Jeroen, Hoefkens.j@gmail.com",
-    "saved": "2022-07-15, 10:08:05"
+    "saved": "2022-07-16, 22:07:53"
   },
   "project": {
     "AUTHOR": "Hoefkens Jeroen",
@@ -38,6 +38,7 @@
     "FORMS": [
       "iface/qt5/Main.ui",
       "iface/qt5/cpuface.ui",
+      "iface/qt5/tblCores.ui",
       "iface/qt6/Main.ui"
     ],
     "HASH": "365d3a401a8c7c24b6afef69cf6ea25cde5b4080",
@@ -92,6 +93,8 @@
       "iface/qt5/__init__.py",
       "iface/qt5/cpuface.py",
       "iface/qt5/main.py",
+      "iface/qt5/tblCores.py",
+      "iface/qt5/tblcores.py",
       "iface/qt6/Main.py",
       "iface/qt6/__init__.py",
       "iface/qt6/main.py",

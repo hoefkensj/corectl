@@ -1,4 +1,25 @@
 #!/usr/bin/env python3
+
+#
+
+  
+
+#
+#
+
+#
+#
+
+#
+#
+
+
+
+
+
+
+
+
 import subprocess
 import shlex
 import functools
@@ -22,6 +43,7 @@ def check_module() -> bool :
 	lsmod = subprocess.check_output("lsmod | awk '{print $1}'",
 																	shell= True								)
 	return 'intel_rapl_msr' in  lsmod.splitlines()
+
 
 
 

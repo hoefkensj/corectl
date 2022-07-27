@@ -37,6 +37,94 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "pyqt5"
+version = "5.15.7"
+description = "Python bindings for the Qt cross platform application toolkit"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+PyQt5-Qt5 = ">=5.15.0"
+PyQt5-sip = ">=12.11,<13"
+
+[[package]]
+name = "pyqt5-qt5"
+version = "5.15.2"
+description = "The subset of a Qt installation needed by PyQt5."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "pyqt5-sip"
+version = "12.11.0"
+description = "The sip module support for PyQt5"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
+name = "pyqt5designer"
+version = "5.14.1"
+description = "PyQt5 Designer"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "pyqt5extras"
+version = "1.0.2"
+description = "继承自pyqt5Cumstom的Pyqt5扩展控件"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "pyqt6"
+version = "6.3.1"
+description = "Python bindings for the Qt cross platform application toolkit"
+category = "main"
+optional = false
+python-versions = ">=3.6.1"
+
+[package.dependencies]
+PyQt6-Qt6 = ">=6.3.0"
+PyQt6-sip = ">=13.4,<14"
+
+[[package]]
+name = "pyqt6-forms"
+version = "0.3.0"
+description = "Forms for PyQt6"
+category = "main"
+optional = false
+python-versions = ">=3.10"
+
+[[package]]
+name = "pyqt6-qt6"
+version = "6.3.1"
+description = "The subset of a Qt installation needed by PyQt6."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "pyqt6-sip"
+version = "13.4.0"
+description = "The sip module support for PyQt6"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[[package]]
+name = "pyqt6-utils"
+version = "0.5.0"
+description = "Utils for PyQt6 (In past: pyqt6-forms)"
+category = "main"
+optional = false
+python-versions = ">=3.10"
+
+[[package]]
 name = "sourcery"
 version = "1.2.7"
 description = "Tools for creating high fidelity source catalogues from radio interferometric datasets"
@@ -47,7 +135,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "5fe34460cc745a0cae0640a7394d10c4c9004731d1d1b9768ff3aa948698e743"
+content-hash = "8ba58801b81d742852dc63177b8ab0147f8f10dc57eaa962df44e1b9b35de660"
 
 [metadata.files]
 click = [
@@ -62,6 +150,21 @@ psutil = []
 py-cpuinfo = [
     {file = "py-cpuinfo-8.0.0.tar.gz", hash = "sha256:5f269be0e08e33fd959de96b34cd4aeeeacac014dd8305f70eb28d06de2345c5"},
 ]
+pyqt5 = []
+pyqt5-qt5 = [
+    {file = "PyQt5_Qt5-5.15.2-py3-none-macosx_10_13_intel.whl", hash = "sha256:76980cd3d7ae87e3c7a33bfebfaee84448fd650bad6840471d6cae199b56e154"},
+    {file = "PyQt5_Qt5-5.15.2-py3-none-manylinux2014_x86_64.whl", hash = "sha256:1988f364ec8caf87a6ee5d5a3a5210d57539988bf8e84714c7d60972692e2f4a"},
+    {file = "PyQt5_Qt5-5.15.2-py3-none-win32.whl", hash = "sha256:9cc7a768b1921f4b982ebc00a318ccb38578e44e45316c7a4a850e953e1dd327"},
+    {file = "PyQt5_Qt5-5.15.2-py3-none-win_amd64.whl", hash = "sha256:750b78e4dba6bdf1607febedc08738e318ea09e9b10aea9ff0d73073f11f6962"},
+]
+pyqt5-sip = []
+pyqt5designer = []
+pyqt5extras = []
+pyqt6 = []
+pyqt6-forms = []
+pyqt6-qt6 = []
+pyqt6-sip = []
+pyqt6-utils = []
 sourcery = [
     {file = "sourcery-1.2.7.tar.gz", hash = "sha256:ef414f71099c52f5df25955f01660a3879867475a62da2c7b99a6c68cd69ad75"},
 ]

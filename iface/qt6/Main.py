@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+#
+
+  
+
 ################################################################################
 ## Form generated from reading UI file 'Main.ui'
 ##
@@ -7,6 +11,21 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
+
+#
+#
+
+#
+#
+
+#
+#
+
+
+
+
+
+
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,

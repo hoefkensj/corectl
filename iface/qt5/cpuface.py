@@ -3,6 +3,25 @@
     And add specific function
 """
 
+#
+
+  
+
+#
+#
+
+#
+#
+
+#
+#
+
+
+
+
+
+
+
 from PyQt5.QtWidgets import QDialog, QMessageBox, QInputDialog,QMainWindow
 from PyQt5.QtCore import QTimer
 from PyQt5.uic import loadUi

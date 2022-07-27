@@ -4,12 +4,11 @@ import sys
 import iface.qt5.Main
 import psutil
 
-def socket():
+def socket() -> dict :
 	import mod.cpuid.cpuid
-	
-	socket0 = mod.cpuid.cpuid.socket0()
-	return socket0
-	
+	def cpuid():
+		return mod.cpuid.cpuid.socket()
+	return cpuid
 
 class MainWindow(PyQt5.QtWidgets.QMainWindow):
 
@@ -20,23 +19,23 @@ class MainWindow(PyQt5.QtWidgets.QMainWindow):
 		# self.show()
 		self.ui = iface.qt5.Main.Ui_MainWindow()
 		self.ui.setupUi(self)
-	
 
-	socket0=socket()
+	s0 = socket()
+	cpu = s0()
 	
 	def update(self):
-		socket0 = self.socket0
+		socket0 = self.cpu
 		cores = socket0['cpu']['cores'].keys()
 		for idx, core in enumerate(cores):
 			cfrq_ghz(socket0,core)
 	
 	def msr(self):
 		import func.msr
-		BD_PROCHOT= func.msr.read_flag(flag='BD_PROCHOT')
-		self.ui.ckbBDPROCHOT.setChecked(bool(BD_PROCHOT))
+		# BD_PROCHOT= func.msr.read_flag(flag='BD_PROCHOT')
+		# self.ui.ckbBDPROCHOT.setChecked(bool(BD_PROCHOT))
 		
 	def cmbMng(self):
-		socket0=self.socket0
+		socket0=self.cpu
 		mng={
 					'govs'  : socket0['cpu']['cores']['cpu0']['cpufreq']['scaling_available_governors']['value'],
 					'nrgs'  :	socket0['cpu']['cores']['cpu0']['cpufreq']['energy_performance_available_preferences']['value']
@@ -50,7 +49,7 @@ class MainWindow(PyQt5.QtWidgets.QMainWindow):
 	
 	def tblCores(self):
 		from PyQt5.QtWidgets import QTableWidgetItem,QVBoxLayout,QCheckBox,QHeaderView
-		socket0=self.socket0
+		socket0=self.cpu
 		cores = socket0['cpu']['cores'].keys()
 		self.ui.tblCores.setRowCount(len(cores))
 		self.ui.tblCores.horizontalHeader().stretchLastSection()

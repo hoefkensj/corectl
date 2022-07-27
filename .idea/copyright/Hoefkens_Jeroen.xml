@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="keyword" value="^(#  Copyright .*)" />
+    <option name="notice" value="set ( &amp;#36;len = &amp;#36;NAME.length() - 3 )&#10;set ( &amp;#36;fileName = &amp;#36;NAME.substring(0, &amp;#36;len) )&#10;#  Copyright (c)  &amp;#36;today.year  Hoefkens J (hoefkensj@gmail.com)" />
+    <option name="myName" value="Hoefkens Jeroen" />
+  </copyright>
+</component>

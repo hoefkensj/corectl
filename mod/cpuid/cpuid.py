@@ -14,7 +14,11 @@ def read_sysfs(path):
 	with open(path) as f:
 		c=f.readline().strip()
 	return c
-
+def read_rtval(path):
+	def rtval():
+		return read_sysfs(path)
+	return rtval
+	
 def regx():
 	def represets(preset):
 		presetlib = {
@@ -69,6 +73,7 @@ def regx():
 	rx.sys.hwmon 				= rx.sys.cpl(DAT='hwmon')
 	rx.sysfx.temp 			= rx.sysfx.cpl(DAT='temp', IDX='\d+',SEP='_', SUF='.*')
 	rx.syscore.core			= rx.syscore.cpl(DAT='Core', SEP='\s', IDX='\d+',)
+	rx.syscore.pkg 			= rx.syscore.cpl(DAT='Package', SEP='\sid\s', IDX='\d+', )
 	rx.full.coretemp 		= rx.full.cpl(DAT='coretemp')
 	rx.kv.processor 		= rx.kv.cpl(KEY='processor', SEP=':', VAL='\d+')
 	rx.kv.keyval 				= rx.kv.cpl(KEY='.*?', SEP=':', VAL='.*?')
@@ -124,13 +129,13 @@ def	cpu():
 			ppol = f'{pfrq}/{n.group(0)}'
 			ppol_props = {prop: {
 				'path' : f'{ppol}/{prop}',
+				'rtval': read_rtval(os.path.join(ppol, prop)),
 				'value': read_sysfs(os.path.join(ppol, prop))
 				} for prop in fls}
 			
 			dct_core = ppol_props
 			
 			dct_cores[core] = dct_core
-		
 		
 		cpufreq= {
 					'path' : pfrq,
@@ -145,22 +150,7 @@ def	cpu():
 		path_hwmon = '/sys/class/hwmon/'
 		path_coretemp=''
 		sensors = {}
-		def filetoparam(filename, path, value):
-			rex = rx.sysfx.temp.search(filename)
-			idx = int(rex.group('IDX'))
-			paramlbl = rex.group('SUF')
-			param = {
-				'sensor': idx,
-				'label' : paramlbl,
-				paramlbl: {
-					'path' : path,
-					'value': value
-					}
-				}
-			return param
-			
 		def coretemp(sensors,path_hwmon):
-			
 			sensors['coretemp']={}
 			params_coretemp={}
 			path_coretemp= ''
@@ -185,17 +175,23 @@ def	cpu():
 						else:
 							params[idx][idn] = {
 								'path': path,
+								'rtval': read_rtval(path),
 								'value': read_sysfs(path)
 								}
 				for coretemp in params.keys():
-					core=params[coretemp]['label']['value']
-					rexc=rx.syscore.core.search(core)
-
+					label=params[coretemp]['label']['value']
+					rexp=rx.syscore.pkg.search(label)
+					if rexp:
+						idxp = int(rexp.group('IDX'))
+						pkg=params[coretemp]
+					rexc=rx.syscore.core.search(label)
 					if rexc:
 						idxc = int(rexc.group('IDX'))
-
 						resort[idxc]=params[coretemp]
-				params=resort
+				params={
+						'package'	:	pkg,
+						'cores' : resort,
+					}
 				return params
 				
 			path_coretemp = find_coretemp(path_coretemp,path_hwmon=path_hwmon)
@@ -206,28 +202,11 @@ def	cpu():
 			return sensors
 		
 		sensors=coretemp(sensors, path_hwmon=path_hwmon)
-		
 		hwmon={
 			'coretemp' : sensors['coretemp'],
 		}
 		return hwmon
 	
-	def plst_tzones():
-		zones = [rx.sys.thermal_zone.search(node).group() for node in os.listdir(p) if rx.sys.thermal_zone.search(node)]
-		
-		dct = {core: {
-			'path': f'{p}/{core}',
-			} for core in zones}
-		keys = sorted(dct.keys())
-		cores = {key: dct[key] for key in keys}
-		return cores
-		
-		dct = {core: {
-			'path': f'{p}/{core}',
-			} for core in cores}
-		keys = sorted(dct.keys())
-		cores = {key: dct[key] for key in keys}
-		return cores
 	
 	p = "/sys/devices/system/cpu"
 	rx = regx()
@@ -239,7 +218,12 @@ def	cpu():
 	cores = {	i: {
 								'path'    : os.path.join(p, core),
 								"cpufreq" : {**cores_cpufreq['freq'][i],	},
-								'hwmon'   : {f'coretemp: {coregroup[i]}' : {**cores_hwmon['coretemp']['temps'][coregroup[i]]}},
+								'hwmon'   : {f'coretemp' : {
+																							'core-id' : f'{coregroup[i]}',
+																							'parameters' : {
+																																**cores_hwmon['coretemp']['temps']['cores'][coregroup[i]]
+																															}
+																						},},
 								'cpuinfo' : cores_cpuinfo[i]
 								} for i, core in enumerate(sorted(cpu_cores))
 								}
@@ -247,6 +231,7 @@ def	cpu():
 	cpu = {
 		'cpu'  : {
 			'path': p,
+			'temp': {'package' :cores_hwmon['coretemp']['temps']['package']},
 			},
 		'cores': cores,
 		}
@@ -282,7 +267,7 @@ def stdw_dct(d, indent=0):
 			sys.stdout.write('  ┃  ' * (indent) + '  ┣━━ ' + '\x1b[1;32m'+str(key) + ':' +'\x1b[0m\n')
 			stdw_dct(d[key], indent + 1)
 		else:
-			sys.stdout.write('  ┃  ' * (indent) + '  ┣━━ ' + str(key) + '\t:\t' + str(d[key] + '\n'))
+			sys.stdout.write('  ┃  ' * (indent) + '  ┣━━ ' + str(key) + '\t:\t' + str(d[key]) + '\n')
 
 if __name__ == '__main__':
 	cpu = cpu()

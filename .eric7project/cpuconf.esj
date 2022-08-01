@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric session file for project cpuconf",
     "warning": "This file was generated automatically, do not edit.",
-    "saved": "2022-07-22, 03:01:11"
+    "saved": "2022-07-27, 22:54:44"
   },
   "MultiProject": "",
   "Project": "",
@@ -12,7 +12,7 @@
   },
   "Editors": [
     {
-      "Filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/corectl.py",
+      "Filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/frm_tblPkgCores.py",
       "Cursor": [
         0,
         0
@@ -22,25 +22,13 @@
       "Clone": false,
       "Splitindex": 0,
       "Editorindex": 0
-    },
-    {
-      "Filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/tblcores.py",
-      "Cursor": [
-        97,
-        7
-      ],
-      "Folds": [],
-      "Zoom": 0,
-      "Clone": false,
-      "Splitindex": 0,
-      "Editorindex": 1
     }
   ],
   "ActiveWindow": {
-    "Filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/tblcores.py",
+    "Filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/frm_tblPkgCores.py",
     "Cursor": [
-      97,
-      7
+      0,
+      0
     ]
   },
   "Breakpoints": [],
@@ -68,14 +56,6 @@
   "ProjectBrowserStates": [
     {
       "Name": "sources",
-      "ExpandedItems": [
-        "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface",
-        "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5",
-        "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/tblcores.py"
-      ]
-    },
-    {
-      "Name": "forms",
       "ExpandedItems": [
         "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface",
         "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5"

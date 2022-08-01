@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric tasks file for project cpuconf",
     "warning": "This file was generated automatically, do not edit.",
-    "saved": "2022-07-27, 22:51:56"
+    "saved": "2022-08-01, 14:23:44"
   },
   "ProjectScanFilter": "",
   "Tasks": [
@@ -12,9 +12,9 @@
       "priority": 1,
       "lineno": 11,
       "completed": false,
-      "created": 1658955113.3426297,
+      "created": 1659356548.0137098,
       "type": 2,
-      "uid": "{5a1b13dd-d2c8-43ed-b3aa-a1c22ead5db7}",
+      "uid": "{98e63cae-0559-4930-8fd2-7f3a897b803d}",
       "parent_uid": "",
       "expanded": false,
       "filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/Main.py"
@@ -25,64 +25,12 @@
       "priority": 1,
       "lineno": 5,
       "completed": false,
-      "created": 1658955113.343585,
+      "created": 1659356548.0147367,
       "type": 2,
-      "uid": "{7c046f97-6fc1-414e-940a-0e6339c31671}",
+      "uid": "{bef93b3e-54ab-47d4-b00c-e270c301211e}",
       "parent_uid": "",
       "expanded": false,
       "filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/tblCores.py"
-    },
-    {
-      "summary": "WARNING: Any manual changes made to this file will be lost when pyuic6 is",
-      "description": "",
-      "priority": 1,
-      "lineno": 5,
-      "completed": false,
-      "created": 1658955113.747678,
-      "type": 2,
-      "uid": "{1496f4c1-f277-4255-a502-918dc7da2f97}",
-      "parent_uid": "",
-      "expanded": false,
-      "filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/tblCores.py"
-    },
-    {
-      "summary": "WARNING: Any manual changes made to this file will be lost when pyuic6 is",
-      "description": "",
-      "priority": 1,
-      "lineno": 5,
-      "completed": false,
-      "created": 1658955113.7515774,
-      "type": 2,
-      "uid": "{ea8e4328-27f9-4f1d-93af-5ffb3b34df04}",
-      "parent_uid": "",
-      "expanded": false,
-      "filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/frm_tbl-PkgCores.py"
-    },
-    {
-      "summary": "WARNING: Any manual changes made to this file will be lost when pyuic6 is",
-      "description": "",
-      "priority": 1,
-      "lineno": 5,
-      "completed": false,
-      "created": 1658955113.753032,
-      "type": 2,
-      "uid": "{6a78852a-3dc2-4f0d-84cf-1e6be47c8c66}",
-      "parent_uid": "",
-      "expanded": false,
-      "filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/frm_tblPkgCores.py"
-    },
-    {
-      "summary": "WARNING: Any manual changes made to this file will be lost when pyuic6 is",
-      "description": "",
-      "priority": 1,
-      "lineno": 9,
-      "completed": false,
-      "created": 1658955113.757297,
-      "type": 2,
-      "uid": "{03a73817-1d96-40ef-946b-6d7a5b7c4280}",
-      "parent_uid": "",
-      "expanded": false,
-      "filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt6/tblCores.py"
     }
   ]
 }

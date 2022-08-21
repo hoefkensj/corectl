@@ -3,10 +3,13 @@
 
 
 import sys
-import PyQt5 as PyQt
+import PyQt5.QtCore as QtCore
+import PyQt5.QtWidgets as QtWidgets
+import PyQt5.QtGui as QtGui
 import frmPkgCores
 import mod.cpuid.cpuid
 import types
+import qt5dictator
 
 def create(nproc,form) :
 	ui = frmPkgCores.Ui_Form()
@@ -15,24 +18,35 @@ def create(nproc,form) :
 	def table(gui):
 		gui.setRowCount(nproc+1)
 		gui.setColumnCount(3)
-		gui.setHorizontalHeaderLabels(['', 'Frq(MHz)', 'Tmp', ''])
-		gui.setVerticalHeaderLabels(['+Package',*[f'Core {i+1}' for i in range(nproc)]])
+		gui.setHorizontalHeaderLabels(['', 'Frq(MHz)', '\u00B0C  ' , ''])
+		font =  QtGui.QFont()
+		font.setBold(True)
+		gui.setVerticalHeaderLabels(['╰─⊞ Package 0',*[f'      ├╼ Core {i+1}' for i in range(nproc)]])
+		gui.verticalHeaderItem(0).setFont(font)
+		gui.verticalHeader().setFrameShape(QtWidgets.QFrame.NoFrame)
+		gui.verticalHeader().setFrameShadow(QtWidgets.QFrame.Plain)
+
+		# gui.verticalHeader().setFrameRect(QtGui.Q)
 		# gui.horizontalHeader().stretchLastSection()
 		gui.resizeColumnsToContents()
 		gui.resizeRowsToContents()
 		gui.horizontalHeader().stretchLastSection()
+		gui.horizontalHeader().setVisible(True)
 		for idx in range(1,(nproc+1)):
-			chkBoxItem = PyQt.QtWidgets.QTableWidgetItem()
-			chkBoxItem.setCheckState(PyQt.QtCore.Qt.CheckState.Checked)
+			chkBoxItem = QtWidgets.QTableWidgetItem()
+			if gui.verticalHeaderItem(0).checkState():
+				chkBoxItem.setCheckState(QtCore.Qt.CheckState.Checked)
+			else:
+				chkBoxItem.setCheckState(QtCore.Qt.CheckState.Unchecked)
 			# PyQt.QtWidgets.QTableWidgetItem.setCheckState(state)
-			gui.setItem(idx, 0, PyQt.QtWidgets.QTableWidgetItem(chkBoxItem))
-			gui.setRowHeight(idx, 18)
+			gui.setItem(idx, 0, QtWidgets.QTableWidgetItem(chkBoxItem))
+			gui.setRowHeight(idx, 15)
 			gui.resizeColumnToContents(0)
 			gui.resizeColumnToContents(1)
 			gui.setRowHidden(idx,True)
 		return gui
 	
-	table(ui.tblCores)
+	table(form)
 	# Cores(ui)
 
 	return ui
@@ -43,17 +57,23 @@ def avrg(list):
 
 def update(ui,cpu) :
 	def ui_upd():
-		value_pkgfreq = avrg([float(cpu["cores"][c]["cpufreq"]["scaling_cur_freq"]["rtval"]()) for c in cpu['cores'].keys()])
+		value_pkgfreq = avrg([float(cpu["cores"][c]["cpufreq"]["scaling_cur_freq"]["rtval"]())/1000 for c in cpu['cores'].keys()])
 		value_pkgtemp=int(cpu['cpu']["temp"]["package"]["input"]["rtval"]())/1000
 		
-		ui.tblCores.setItem(0, 1, PyQt.QtWidgets.QTableWidgetItem(f'{value_pkgfreq}'))
-		ui.tblCores.setItem(0, 2, PyQt.QtWidgets.QTableWidgetItem(f'{value_pkgtemp:0.2f}'))
+		ui.tblCores.setItem(0, 1, QtWidgets.QTableWidgetItem(f'{value_pkgfreq:0.2f}'))
+		ui.tblCores.setItem(0, 2, QtWidgets.QTableWidgetItem(f'  {value_pkgtemp:0.0f}  '))
 		for c in cpu['cores'].keys():
-			value_freq=float(cpu["cores"][c]["cpufreq"]["scaling_cur_freq"]["rtval"]())
+			value_freq=float(cpu["cores"][c]["cpufreq"]["scaling_cur_freq"]["rtval"]())/1000
 			value_temp=float(cpu['cores'][c]['hwmon']['coretemp']['parameters']['input']['rtval']())
-			ui.tblCores.setItem(c+1, 1, PyQt.QtWidgets.QTableWidgetItem(f'{value_freq:0.2f}'))
-			ui.tblCores.setItem(c+1, 2, PyQt.QtWidgets.QTableWidgetItem(f'{(value_temp/1000):0.2f}\u00B0C'))
-			
+			ui.tblCores.setItem(c+1, 1, QtWidgets.QTableWidgetItem(f'{value_freq:0.2f}'))
+			ui.tblCores.setItem(c+1, 2, QtWidgets.QTableWidgetItem(f'  {(value_temp/1000):0.0f}  '))
+			chkBoxItem = QtWidgets.QTableWidgetItem()
+			if ui.tblCores.verticalHeaderItem(0).checkState():
+				chkBoxItem.setCheckState(QtCore.Qt.CheckState.Checked)
+			else:
+				chkBoxItem.setCheckState(QtCore.Qt.CheckState.Unchecked)
+			# PyQt.QtWidgets.QTableWidgetItem.setCheckState(state)
+			ui.tblCores.setItem(c+1, 0, QtWidgets.QTableWidgetItem(chkBoxItem))
 		ui.tblCores.resizeColumnToContents(1)
 		ui.tblCores.resizeColumnToContents(2)
 		return ui
@@ -80,7 +100,7 @@ def ui_tmr(ui):
 		return int(time*1000)
 	def start():return tmr.start(period())
 	ns = types.SimpleNamespace()
-	tmr = PyQt.QtCore.QTimer()
+	tmr = QtCore.QTimer()
 	ns.time = start
 	ns.run = tmr.timeout.connect
 	return ns
@@ -92,8 +112,9 @@ def showrows(ui):
 	return showhide
 def main():
 	cpu		= mod.cpuid.cpuid.cpu()
-	win		= PyQt.QtWidgets.QApplication(sys.argv)
-	wgt 	= PyQt.QtWidgets.QWidget()
+	qt5dictator.browse(cpu=cpu)
+	win		= QtWidgets.QApplication(sys.argv)
+	wgt 	= QtWidgets.QWidget()
 	cores = cpu['cores']
 	
 	nproc = len(cores.keys())

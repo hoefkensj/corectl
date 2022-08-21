@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 import PyQt5
 import sys
-import iface.qt5.Main
-import psutil
+import iface.qt5.old.Main
 
 def socket() -> dict :
 	import mod.cpuid.cpuid
 	def cpuid():
-		return mod.cpuid.cpuid.socket()
+		return mod.cpuid.cpuid.cpu()
 	return cpuid
 
 class MainWindow(PyQt5.QtWidgets.QMainWindow):
@@ -17,7 +16,7 @@ class MainWindow(PyQt5.QtWidgets.QMainWindow):
 		# PyQt5.
 		# loadUi('Main.ui', self)
 		# self.show()
-		self.ui = iface.qt5.Main.Ui_MainWindow()
+		self.ui = iface.qt5.old.Main.Ui_MainWindow()
 		self.ui.setupUi(self)
 
 	s0 = socket()
@@ -30,7 +29,7 @@ class MainWindow(PyQt5.QtWidgets.QMainWindow):
 			cfrq_ghz(socket0,core)
 	
 	def msr(self):
-		import func.msr
+		pass
 		# BD_PROCHOT= func.msr.read_flag(flag='BD_PROCHOT')
 		# self.ui.ckbBDPROCHOT.setChecked(bool(BD_PROCHOT))
 		
@@ -48,7 +47,8 @@ class MainWindow(PyQt5.QtWidgets.QMainWindow):
 			self.ui.cmbNrg.addItem(energy)
 	
 	def tblCores(self):
-		from PyQt5.QtWidgets import QTableWidgetItem,QVBoxLayout,QCheckBox,QHeaderView
+		from PyQt5.QtWidgets import QTableWidgetItem
+		
 		socket0=self.cpu
 		cores = socket0['cpu']['cores'].keys()
 		self.ui.tblCores.setRowCount(len(cores))

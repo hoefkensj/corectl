@@ -3,7 +3,6 @@ import os
 import re
 import sys
 import types
-
 def read_file(path):
 	content = []
 	with open(path) as f:
@@ -14,6 +13,7 @@ def read_sysfs(path):
 	with open(path) as f:
 		c=f.readline().strip()
 	return c
+
 def read_rtval(path):
 	def rtval():
 		return read_sysfs(path)
@@ -81,7 +81,7 @@ def regx():
 	
 	return rx
 
-def	cpu():
+def cpu():
 	def cpuinfo():
 		blocks = {}
 		cpuinfo = {}
@@ -96,74 +96,55 @@ def	cpu():
 			else:
 				keyval = rx.kv.keyval.search(line)
 				key = keyval.group('KEY').strip()
-				key = rx.repl.space('-',key)
+				key = rx.repl.space('-', key)
 				val = keyval.group('VAL').strip()
 				blocks[n][key] = val
 		for block in blocks:
-			core=blocks[block].get('processor')
+			core = blocks[block].get('processor')
 			if core:
-				cpuinfo[int(core)]=blocks[block]
+				cpuinfo[int(core)] = blocks[block]
 		return cpuinfo
+
 	def cpufrq():
-		fls = [
-			'base_frequency',
-			'cpuinfo_max_freq',
-			'cpuinfo_min_freq',
-			'cpuinfo_transition_latency',
-			'energy_performance_available_preferences',
-			'energy_performance_preference',
-			'scaling_available_governors',
-			'scaling_cur_freq',
-			'scaling_driver',
-			'scaling_governor',
-			'scaling_max_freq',
-			'scaling_min_freq',
-			'scaling_setspeed',
-			]
+		fls = ['base_frequency', 'cpuinfo_max_freq', 'cpuinfo_min_freq', 'cpuinfo_transition_latency', 'energy_performance_available_preferences', 'energy_performance_preference', 'scaling_available_governors', 'scaling_cur_freq', 'scaling_driver', 'scaling_governor', 'scaling_max_freq', 'scaling_min_freq', 'scaling_setspeed']
+
 		dct_cores = {}
-		pfrq = f'/sys/devices/system/cpu/cpufreq'
-		# re.compile('(^policy(?P<n>\d+)$)')
+		pfrq = '/sys/devices/system/cpu/cpufreq'
 		for node in os.listdir(pfrq):
 			n = rx.sys.policy.search(node)
 			core = int(n.group('IDX'))
 			ppol = f'{pfrq}/{n.group(0)}'
-			ppol_props = {prop: {
-				'path' : f'{ppol}/{prop}',
-				'rtval': read_rtval(os.path.join(ppol, prop)),
-				'value': read_sysfs(os.path.join(ppol, prop))
-				} for prop in fls}
-			
+			ppol_props = {prop: {'path': f'{ppol}/{prop}', 'rtval': read_rtval(os.path.join(ppol, prop)), 'value': read_sysfs(os.path.join(ppol, prop))} for prop in fls}
+
 			dct_core = ppol_props
-			
 			dct_cores[core] = dct_core
-		
-		cpufreq= {
-					'path' : pfrq,
-					'freq' : dct_cores,}
+		cpufreq = {'path': pfrq, 'freq': dct_cores}
 		return cpufreq
+
 	def coregroups(info):
-		grouplist=[]
+		grouplist = []
 		for idx, core in enumerate(sorted(info.keys())):
-			grouplist+=[int(info[core]['core-id'])]
+			grouplist += [int(info[core]['core-id'])]
 		return grouplist
+
 	def hwmon():
 		path_hwmon = '/sys/class/hwmon/'
-		path_coretemp=''
+		path_coretemp = ''
 		sensors = {}
-		def coretemp(sensors,path_hwmon):
-			sensors['coretemp']={}
-			params_coretemp={}
-			path_coretemp= ''
-			
-			def find_coretemp(path_coretemp,path_hwmon):
+		def coretemp(sensors, path_hwmon):
+			sensors['coretemp'] = {}
+			params_coretemp = {}
+			path_coretemp = ''
+			def find_coretemp(path_coretemp, path_hwmon):
 				dirlist_hwmon = sorted(os.listdir(path_hwmon))
 				for idx, mon in enumerate(dirlist_hwmon):
 					name = read_sysfs(os.path.join(path_hwmon, mon, 'name'))
 					if name == 'coretemp':
-						path_coretemp=os.path.realpath(os.path.join(path_hwmon, mon))
+						path_coretemp = os.path.realpath(os.path.join(path_hwmon, mon))
 				return path_coretemp
-			def read_coretemps(params,path_coretemp):
-				resort={}
+
+			def read_coretemps(params, path_coretemp):
+				resort = {}
 				for file in sorted(os.listdir(path_coretemp)):
 					rex = rx.sysfx.temp.search(file)
 					if rex:
@@ -173,70 +154,75 @@ def	cpu():
 						if idx not in params.keys():
 							params[idx] = {}
 						else:
-							params[idx][idn] = {
-								'path': path,
-								'rtval': read_rtval(path),
-								'value': read_sysfs(path)
-								}
+							params[idx][idn] = {'path': path, 'rtval': read_rtval(path), 'value': read_sysfs(path)}
+
 				for coretemp in params.keys():
-					label=params[coretemp]['label']['value']
-					rexp=rx.syscore.pkg.search(label)
+					label = params[coretemp]['label']['value']
+					rexp = rx.syscore.pkg.search(label)
 					if rexp:
 						idxp = int(rexp.group('IDX'))
-						pkg=params[coretemp]
-					rexc=rx.syscore.core.search(label)
+						pkg = params[coretemp]
+					rexc = rx.syscore.core.search(label)
 					if rexc:
 						idxc = int(rexc.group('IDX'))
-						resort[idxc]=params[coretemp]
-				params={
-						'package'	:	pkg,
-						'cores' : resort,
-					}
+						resort[idxc] = params[coretemp]
+				params = {'package': pkg, 'cores': resort}
 				return params
-				
-			path_coretemp = find_coretemp(path_coretemp,path_hwmon=path_hwmon)
-			params_coretemp = read_coretemps(params_coretemp,path_coretemp=path_coretemp,)
-			
-			sensors['coretemp']={  'path' : path_coretemp,
-                  'temps' : params_coretemp,	}
+
+			path_coretemp = find_coretemp(path_coretemp, path_hwmon=path_hwmon)
+			params_coretemp = read_coretemps(params_coretemp, path_coretemp=path_coretemp)
+			sensors['coretemp'] = {'path': path_coretemp, 'temps': params_coretemp}
 			return sensors
-		
-		sensors=coretemp(sensors, path_hwmon=path_hwmon)
-		hwmon={
-			'coretemp' : sensors['coretemp'],
-		}
+
+		sensors = coretemp(sensors, path_hwmon=path_hwmon)
+		hwmon = {'coretemp': sensors['coretemp']}
 		return hwmon
-	
-	
+
+	def cpucores(syfs_path):
+		cores = []
+		for node in os.listdir(syfs_path):
+			if rx.sys.cpu.search(node):
+				cores.append(rx.sys.cpu.search(node).group())
+		return sorted(cores)
+
 	p = "/sys/devices/system/cpu"
 	rx = regx()
-	cpu_cores = [rx.sys.cpu.search(node).group() for node in os.listdir(p) if rx.sys.cpu.search(node)]
+	cpucores = cpucores(p)
 	cores_cpuinfo = cpuinfo()
 	cores_cpufreq = cpufrq()
-	cores_hwmon=hwmon()
+	cores_hwmon = hwmon()
 	coregroup = coregroups(cores_cpuinfo)
-	cores = {	i: {
-								'path'    : os.path.join(p, core),
-								"cpufreq" : {**cores_cpufreq['freq'][i],	},
-								'hwmon'   : {f'coretemp' : {
-																							'core-id' : f'{coregroup[i]}',
-																							'parameters' : {
-																																**cores_hwmon['coretemp']['temps']['cores'][coregroup[i]]
-																															}
-																						},},
-								'cpuinfo' : cores_cpuinfo[i]
-								} for i, core in enumerate(sorted(cpu_cores))
-								}
 	
-	cpu = {
-		'cpu'  : {
-			'path': p,
-			'temp': {'package' :cores_hwmon['coretemp']['temps']['package']},
-			},
-		'cores': cores,
-		}
+	cores = {
+		i	: {
+			'meta'		: {	'sysfs'	: os.path.join(p, core),},
+			'cpufreq'	:	{	**cores_cpufreq['freq'][i]			},
+			'hwmon'		: {
+				'coretemp'	:	{
+					'core-id'			:		f'{coregroup[i]}',
+					'parameters'	: 	{	**cores_hwmon['coretemp']['temps']['cores'][coregroup[i]]	},
+											},
+									},
+			'cpuinfo': cores_cpuinfo[i]
+				} for i, core in enumerate(cpucores)
+				}
 
-	return cpu
+
+	cpu = {'package': {'meta': {'sysfs': p}, 'temp': cores_hwmon['coretemp']['temps']['package']}, 'cores': {**cores}}
+
+	fn_rtfreq = {c: cores[c]["cpufreq"]["scaling_cur_freq"]["rtval"] for c in cores}
+
+
+	fn_rttemp = {c: cores[c]['hwmon']['coretemp']['parameters']['input']['rtval'] for c in cores}
+
+
+	fnrt = {'freq': fn_rtfreq, 'temp': fn_rttemp}
+	cpu['fn'] = fnrt
+	pkg_id = cpu['package']['temp']['label']['value']
+	rexp = rx.syscore.pkg.search(pkg_id)
+	id = rexp.group('IDX')
+	cpudata = {id: {**cpu}}
+	return cpudata
 
 def print_dicttree(dct, ident):
 	def testkey(content, ident):
@@ -272,14 +258,8 @@ def stdw_dct(d, indent=0):
 if __name__ == '__main__':
 	cpu = cpu()
 	stdw_dct(cpu)
-	#print_dicttree(cpu, 0)
-
-
-	
-
-	
 # 	cores_ponline="/sys/devices/system/cpu/online"
 # 	cores_poffline="/sys/devices/system/cpu/offline"
 #\
 
-
+	# print(cpu['cpu']['temp']['package']['input']['rtval']())

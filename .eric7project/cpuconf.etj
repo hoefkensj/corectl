@@ -2,35 +2,8 @@
   "header": {
     "comment": "eric tasks file for project cpuconf",
     "warning": "This file was generated automatically, do not edit.",
-    "saved": "2022-08-01, 14:23:44"
+    "saved": "2022-08-06, 17:30:42"
   },
   "ProjectScanFilter": "",
-  "Tasks": [
-    {
-      "summary": "WARNING: Any manual changes made to this file will be lost when pyuic5 is",
-      "description": "",
-      "priority": 1,
-      "lineno": 11,
-      "completed": false,
-      "created": 1659356548.0137098,
-      "type": 2,
-      "uid": "{98e63cae-0559-4930-8fd2-7f3a897b803d}",
-      "parent_uid": "",
-      "expanded": false,
-      "filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/Main.py"
-    },
-    {
-      "summary": "WARNING: Any manual changes made to this file will be lost when pyuic6 is",
-      "description": "",
-      "priority": 1,
-      "lineno": 5,
-      "completed": false,
-      "created": 1659356548.0147367,
-      "type": 2,
-      "uid": "{bef93b3e-54ab-47d4-b00c-e270c301211e}",
-      "parent_uid": "",
-      "expanded": false,
-      "filename": "/home/hoefkens/Development/Code/Python/Projects_ACTIVE/corectl/iface/qt5/tblCores.py"
-    }
-  ]
+  "Tasks": []
 }

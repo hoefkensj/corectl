@@ -1,21 +1,15 @@
 import sys
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets,QtCore,QtGui
 import qtdictfb
+import types
 
 
-
-def window(*a,**k):
-	win = QtWidgets.QApplication(sys.argv)
-	def display(gui):
-		gui.show()
-		sys.exit(win.exec())
-	return display
 
 def make_tree(gui, branches=[], **k):
 	def make_branch(root, dct, path):
 		for key in dct.keys():
 			data = dct[key]
-			dictpath = f'{path}["{key}"]'
+			dictpath = f"{path}['{key}']"
 			branch = QtWidgets.QTreeWidgetItem()
 			branch.setText(0, str(key))
 			branch.setText(2, dictpath)
@@ -38,9 +32,87 @@ def make_tree(gui, branches=[], **k):
 	make_branch(root, data, name)
 	return root
 
+def construct_Qt5Ui():
+	def QtApp():
+		app = types.SimpleNamespace()
+		app.QtWin = QtWidgets.QApplication(sys.argv)
+		app.QtClip = app.QtWin.clipboard()
+		return app
 
+	def Wgt(n=None, t='h'):
+		def create():
+			nwgt_wgt = QtWidgets.QWidget()
+			if t == 'h':
+				nwgt_lay = QtWidgets.QHBoxLayout(nwgt_wgt)
+			elif t == 'v':
+				nwgt_lay = QtWidgets.QVBoxLayout(nwgt_wgt)
+			return nwgt_wgt, nwgt_lay
+		def init(nwgt_wgt, nwgt_lay):
+			nwgt_wgt.setObjectName(f'wgt{n}')
+			nwgt_lay.setObjectName(f'lay{n}')
+			nwgt_wgt.setContentsMargins(0, 0, 0, 0)
+			nwgt_lay.setContentsMargins(0, 0, 0, 0)
+			nwgt_lay.setSpacing(0)
+			return nwgt_wgt, nwgt_lay
+		# def ns(nwgt):
+		# 	nwgt.add = nwgt.lay.addWidget
+		# 	nwgt.app = nwgt.lay.addItem
+		# 	nwgt.width= nwgt.wgt.width
+		# 	return nwgt
+		qtwgt_wgt, qtwgt_lay = create()
+		qtwgt_wgt, qtwgt_lay = init(qtwgt_wgt, qtwgt_lay)
+		return qtwgt_wgt, qtwgt_lay
 
-def construct_Qt5Ui( Qt5Wgt ):
+	def make_icon(name, set='Fluent'):
+		icon = QtGui.QIcon()
+		lset = f'/home/hoefkens/.local/share/icons/{set}/symbolic/actions/{name}.svg'
+		dset = f'/home/hoefkens/.local/share/icons/{set}-dark/symbolic/actions/{name}.svg'
+		icon.addPixmap(QtGui.QPixmap(dset), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		icon.addPixmap(QtGui.QPixmap(lset), QtGui.QIcon.Normal, QtGui.QIcon.On)
+		return icon
+	def iBtn(n, bi=False, h=20, w=20):
+		icon = make_icon(n)
+		btn = QtWidgets.QToolButton()
+		btn.setObjectName(f'tBtn{n}')
+		btn.setIcon(icon)
+		btn.setIconSize(QtCore.QSize(32, 32))
+		btn.setMaximumSize(QtCore.QSize(w, h))
+		btn.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
+		btn.setCheckable(bi)
+		return btn
+	def pBtn(n, bi=False):
+		sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+		btn = QtWidgets.QToolButton()
+		btn.setObjectName(f'ibtn{n}')
+		btn.setSizePolicy(sizePolicy)
+		btn.setText(n)
+		btn.setCheckable(bi)
+		return btn
+
+	def make_wgtMainCtl():
+		spacerItem = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+		def fileCtl():
+			btnPrint = pBtn('Print')
+			btnSave = pBtn('Save As')
+			hWgt_wgt,hWgt_lay = Wgt(t='h')
+			hWgt_lay.addWidget(btnPrint)
+			hWgt_lay.addWidget(btnSave)
+			return hWgt_wgt,hWgt_lay
+
+		def appCtl():
+			btnExit = pBtn('Exit')
+			hWgt_wgt,hWgt_lay = Wgt(t='h')
+			hWgt_lay.addItem(spacerItem)
+			hWgt_lay.addWidget(btnExit)
+			return hWgt_wgt,hWgt_lay
+
+		filectl_wgt, filectl_lay=fileCtl()
+		appctl_wgt, appctl_lay=appCtl()
+		hWgt_wgt,hWgt_lay = Wgt(t='h')
+		hWgt_lay.addWidget(filectl_wgt)
+		hWgt_lay.addWidget(appctl_wgt)
+		return hWgt_wgt,hWgt_lay
+
 
 	def disp(gui):
 		frm=[gui.hide,'',gui.show]
@@ -53,10 +125,11 @@ def construct_Qt5Ui( Qt5Wgt ):
 		def fill():
 			data=gui.trDict.selectedItems()
 			for  idx,txtbox in zip( [0,3,2],txtBox):
-				txtBox[idx].setText(data[0])
+				txtbox.setText(data[0].text(idx))
 		return fill
 	
-	def adaptView(gui):
+	def fitt(gui):
+		gui.trDict.expandAll()
 		gui.trDict.resizeColumnToContents(0)
 		w = gui.trDict.columnWidth(0)
 		gui.trDict.setColumnWidth(0, w + 20)
@@ -64,23 +137,25 @@ def construct_Qt5Ui( Qt5Wgt ):
 		gui.trDict.resizeColumnToContents(1)
 		w = gui.trDict.columnWidth(1)
 		gui.trDict.setColumnWidth(1, w + 20)
+		gui.trDict.collapseAll()
+	def copytoclip(txt):
+		def toclip():
+			App.QtClip.setText(txt.text())
+		return toclip
+	def editkey(gui):
+		def edit(state):
+			gui.btnEditKey.setChecked(state)
+			gui.txtKey.setReadOnly(not state)
+		return edit
+	def editval(gui):
+		def edit(state):
+			gui.btnEditVal.setChecked(state)
+			gui.txtVal.setReadOnly(not state)
+		return edit
 	
-	# def select(gui):
-	# 	def show():
-	# 		txt = {
-	# 			'key' : gui.txtKey,
-	# 			'val' : gui.txtVal,
-	# 			'path': gui.txtPath,
-	# 			}
-	# 		selected = gui.trDict.selectedItems()
-	# 		adaptView()
-	# 		for item in selected:
-	# 			txt['key'].setText(str(item.data(0, 0)))
-	# 			txt['val'].setText(str(item.data(3, 0)))
-	# 			txt['path'].setText(str(item.data(2, 0)))
-	# 	return show
-
+	
 	def create(wgt):
+
 		def init():
 			gui.trDict.expandAll()
 			gui.trDict.resizeColumnToContents(0)
@@ -92,46 +167,58 @@ def construct_Qt5Ui( Qt5Wgt ):
 			gui.trDict.hideColumn(3)
 			gui.frmData.hide()
 			gui.frmSearch.hide()
-
+			gui.btnEditKey.setCheckable(True)
+			gui.btnEditKey.setChecked(False)
 			
 		def connect():
-
 			gui.chkSearch.stateChanged.connect(disp(gui.frmSearch))
 			gui.chkData.stateChanged.connect(disp(gui.frmData))
 			gui.trDict.itemClicked.connect(select(gui))
 			gui.btnExp.clicked.connect(gui.trDict.expandAll)
 			gui.btnCollapse.clicked.connect(gui.trDict.collapseAll)
-			gui.btnCopy.clicked.connect()
-			gui.btnSearch.clicked.connect()
-			gui.btnAbout.clicked.connect()
-			
-			
-			
-			
+			gui.btnCopy.clicked.connect(copytoclip(gui.txtPath))
+			# gui.btnSearch.clicked.connect(copyto)
+			# gui.btnAbout.clicked.connect(copytoclip)
+			gui.btnEditKey.clicked.connect(editkey(gui))
+			gui.btnEditVal.clicked.connect(print)
 			gui.btnExit.clicked.connect(sys.exit)
-			
-			
 			
 		gui = qtdictfb.Ui_wgtQtpyDictator()
 		gui.setupUi(wgt)
+		MainCtl_wgt,MainCtl_lay=make_wgtMainCtl()
+		gui.verticalLayout_5.addWidget(MainCtl_wgt)
 		init()
 		connect()
-
+		
 		return gui
-	ui=create(Qt5Wgt)
-	return ui
+	App = QtApp()
+	App.Qt5Wgt = QtWidgets.QWidget()
+	App.Ui=create(App.Qt5Wgt)
+	App.Disp  = disp
+	App.Select = select
+	App.Fitt = fitt
+	App.Create= create
+	return App
 
 def browse(**k):
-
-	QtWin = QtWidgets.QApplication(sys.argv)
-	QtpyDictator = QtWidgets.QWidget()
-	gui = construct_Qt5Ui(QtpyDictator)
-
+	QtApp = construct_Qt5Ui()
 	kv=k.popitem()
-	trunk=make_tree(gui, name=kv[0], data=kv[1])
+	trunk=make_tree(QtApp.Ui, name=kv[0], data=kv[1])
 
-	gui.trDict.addTopLevelItem(trunk)
+	QtApp.Ui.trDict.addTopLevelItem(trunk)
+	QtApp.Fitt(QtApp.Ui)
+	QtApp.Qt5Wgt.show()
+	sys.exit(QtApp.QtWin.exec())
 
-	QtpyDictator.show()
-	sys.exit(QtWin.exec())
-	
+
+
+if __name__ == '__main__' :
+	dct = {
+		'a' : {
+						'aa' : 'aa',
+						'ab'  : 'ab'
+		},
+		'b'  : { 'ba' : 'ba',
+              'bb': 'bb'
+		}}
+	browse(test=dct)

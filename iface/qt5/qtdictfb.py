@@ -253,7 +253,7 @@ class Ui_wgtQtpyDictator(object):
         self.btnEditKey.setText("")
         self.btnEditKey.setIcon(icon2)
         self.btnEditKey.setIconSize(QtCore.QSize(32, 32))
-        self.btnEditKey.setCheckable(False)
+        self.btnEditKey.setCheckable(True)
         self.btnEditKey.setChecked(False)
         self.btnEditKey.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
         self.btnEditKey.setAutoRaise(False)

@@ -256,8 +256,10 @@ def stdw_dct(d, indent=0):
 			sys.stdout.write('  ┃  ' * (indent) + '  ┣━━ ' + str(key) + '\t:\t' + str(d[key]) + '\n')
 
 if __name__ == '__main__':
+	from pyDictatorQt import browse
 	cpu = cpu()
-	stdw_dct(cpu)
+	browse(cpu=cpu)
+	# stdw_dct(cpu)
 # 	cores_ponline="/sys/devices/system/cpu/online"
 # 	cores_poffline="/sys/devices/system/cpu/offline"
 #\

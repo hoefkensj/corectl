@@ -7,7 +7,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import qtdictfb
 import types
 
-def construct_Qt5Ui()
+def construct_Qt5Ui():
 	win = QtWidgets.QApplication(sys.argv)
 
 	

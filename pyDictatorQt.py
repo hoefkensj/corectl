@@ -28,14 +28,15 @@ ico		=		{
 								b'PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXciIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KIDxwYXRoIGQ9Im02IDBjLTEuMTA0NiAwLTIgMC44OTU0My0yIDJ2MTBjMCAxLjEwNDYgMC44OTU0MyAyIDIgMmg2YzEuMTA0NiAwIDItMC44OTU0IDItMnYtMTBjMC0xLjEwNDYtMC44OTU0LTItMi0yem0tMSAyYzAtMC41NTIyOCAwLjQ0NzcyLTEgMS0xaDZjMC41NTIzIDAgMSAwLjQ0NzcyIDEgMXYxMGMwIDAuNTUyMy0wLjQ0NzcgMS0xIDFoLTZjLTAuNTUyMjggMC0xLTAuNDQ3Ny0xLTF6bS0zIDJjMC0wLjc0MDI4IDAuNDAyMi0xLjM4NjYgMS0xLjczMjR2MTAuMjMyYzAgMS4zODA3IDEuMTE5MyAyLjUgMi41IDIuNWg2LjIzMjRjLTAuMzQ1OCAwLjU5NzgtMC45OTIxIDEtMS43MzI0IDFoLTQuNWMtMS45MzMgMC0zLjUtMS41NjctMy41LTMuNXoiIGZpbGw9IiNkZWRlZGUiLz4KPC9zdmc+Cg=='],
 }
 
-def construct_Qt5Ui(data):
+def construct_Qt5Ui(name,data):
 	def Elements():
 		def Layouts():
 			def sPol(wgt, h=None, v=None):
 				Pol = QtWidgets.QSizePolicy(sPols[h], sPols[v])
 				wgt.setSizePolicy(Pol)
 				return wgt
-			def siblings(wgts, t, margin=[0,0,0,0]):
+			def siblings(wgts, t, **k):
+				margin = k.get('mrg') or [0,0,0,0]
 				wgt,lay=Wgt(t=t)
 				wgt.setContentsMargins(*margin)
 				for item in wgts:
@@ -175,6 +176,7 @@ def construct_Qt5Ui(data):
 			def layout(wgt):
 				wgt.Tree.setContentsMargins(*margin)
 				wgt.setContentsMargins(*margin)
+				wgt	= Elmt.Lay.sPol(wgt, h='E', v='E')
 				return wgt
 			def add(wgt,lay):
 				lay.addWidget(wgt.Tree)
@@ -558,14 +560,12 @@ def construct_Qt5Ui(data):
 		fnx.copytoclip  =	copytoclip
 		fnx.allign      =	allign
 		fnx.makeTree		=	make_tree
-		fnx.stdf				=	stdf
-		fnx.stdw				= stdw
+		fnx.stdf				=	stdf(data,file=f'{name}.txt',name=name)
+		fnx.stdw				= stdw(data,name=name)
 		fnx.OnSelect		= select(Key=App.Main.Key,Val=App.Main.Val,Path=App.Main.Path)
 		fnx.PathToClip	=	copytoclip(App.Main.Path.txt)
 		fnx.Searched		=	search(App)
 		fnx.Found				=	searchSel(App)
-		fnx.stdf 				=	stdf(dct,file='test.txt',name='Test')
-		fnx.stdo				=	stdw(dct,name='Test')
 		fnx.selNext			= App.Main.Search.selNext(App.Main.Tree.Tree)
 		fnx.selPrev			= App.Main.Search.selPrev(App.Main.Tree.Tree)
 		return fnx
@@ -586,12 +586,12 @@ def construct_Qt5Ui(data):
 			App.Main.AppCtl		=	App.Widgets.AppCtl()
 			return App
 		def blocks(App):
-			App.Main.wgtCtl		=	App.Elements.Lay.siblings([App.Main.ExpCol,App.Main.Search],t='h')
-			App.Main.WrpPath	=	App.Elements.Lay.center(App.Main.Path,w=5,margin=[0,0,0,5])
-			App.Main.Edit			=	App.Elements.Lay.siblings([App.Main.Key,App.Main.Val],'v',margin=[0,0,0,5])
+			App.Main.wgtCtl		=	App.Elements.Lay.siblings([App.Main.ExpCol,App.Main.Path],t='h')
+			App.Main.WrpPath	=	App.Elements.Lay.center(App.Main.Search,w=5,mrg=[0,0,0,5])
+			App.Main.Edit			=	App.Elements.Lay.siblings([App.Main.Key,App.Main.Val],'v',mrg=[0,0,0,5])
 			App.Main.wrpEdit		=	App.Elements.Lay.center(App.Main.Edit,w=25)
-			App.Main.TrDisp		=	App.Elements.Lay.siblings([App.Main.Tree,App.Main.wgtCtl],t='v')
-			App.Main.Tools			=	App.Elements.Lay.siblings([App.Main.WrpPath,App.Main.wrpEdit],'v',margin=[0,0,0,5])
+			App.Main.TrDisp		=	App.Elements.Lay.siblings([App.Main.Tree,App.Main.wgtCtl],t='v',mrg=[0,0,0,5])
+			App.Main.Tools			=	App.Elements.Lay.siblings([App.Main.WrpPath,App.Main.wrpEdit],'v',mrg=[0,0,0,5])
 			return App
 		def add(App):
 			App.Main.lay.addWidget(App.Main.TrDisp)
@@ -610,7 +610,7 @@ def construct_Qt5Ui(data):
 		App.Main.Tree.Selected(App.Fnx.OnSelect)
 		App.Main.Tree.FoundSel(App.Fnx.Found)
 		App.Main.AppCtl.fnSave(App.Fnx.stdf)
-		App.Main.AppCtl.fnPrint(App.Fnx.stdo)
+		App.Main.AppCtl.fnPrint(App.Fnx.stdw)
 		App.Main.Path.Copy(App.Fnx.PathToClip)
 		App.Main.Search.Find(App.Fnx.Searched)
 		App.Main.Search.Next(App.Fnx.selNext)
@@ -627,7 +627,7 @@ def construct_Qt5Ui(data):
 	return App
 def browse(**k):
 	kv = k.popitem()
-	QtApp = construct_Qt5Ui(kv[1])
+	QtApp = construct_Qt5Ui(kv[0],kv[1])
 	trunk = QtApp.Fnx.makeTree(QtApp, name=kv[0], data=kv[1])
 	QtApp.Main.Tree.Tree.addTopLevelItem(trunk)
 	QtApp.Main.show()
